@@ -45,20 +45,25 @@ export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   };
 
   return (
-    <div className="border-t border-border p-4 bg-background">
+    <div className="bg-gradient-secondary/30 backdrop-blur-sm border-t border-border/50 p-4 animate-fade-in">
       {attachment.data && (
-        <div className="mb-2 p-2 bg-muted rounded-lg flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">📷 Image attached</span>
+        <div className="mb-3 p-3 bg-accent/10 border border-accent/20 rounded-xl flex items-center justify-between animate-scale-in">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+            <span className="text-sm text-accent font-medium">Image ready to send</span>
+          </div>
           <Button 
             variant="ghost" 
             size="sm" 
             onClick={() => setAttachment({ mime_type: null, data: null })}
+            className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
           >
             ✕
           </Button>
         </div>
       )}
-      <div className="flex gap-2">
+      
+      <div className="flex gap-3 items-end">
         <input
           ref={fileInputRef}
           type="file"
@@ -66,27 +71,43 @@ export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
           onChange={handleImageUpload}
           className="hidden"
         />
+        
         <Button 
           variant="outline" 
           size="icon"
           onClick={() => fileInputRef.current?.click()}
           disabled={disabled}
+          className="h-12 w-12 bg-background/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 shadow-soft hover:shadow-medium group"
         >
-          <ImageIcon className="h-4 w-4" />
+          <ImageIcon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
         </Button>
-        <Input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Type your message..."
-          disabled={disabled}
-          className="flex-1"
-        />
+        
+        <div className="flex-1 relative">
+          <Input
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type your message... (Press Enter to send)"
+            disabled={disabled}
+            className="h-12 bg-background/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 focus:border-primary transition-all duration-300 shadow-soft focus:shadow-medium pr-4 text-foreground placeholder:text-muted-foreground/60"
+          />
+          {disabled && (
+            <div className="absolute inset-0 bg-background/50 backdrop-blur-sm rounded-lg flex items-center justify-center">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce-gentle"></div>
+                <span>AI is thinking...</span>
+              </div>
+            </div>
+          )}
+        </div>
+        
         <Button 
           onClick={handleSend} 
           disabled={disabled || (!message.trim() && !attachment.data)}
+          className="h-12 px-6 bg-gradient-primary hover:opacity-90 text-primary-foreground shadow-soft hover:shadow-medium transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <SendIcon className="h-4 w-4" />
+          <SendIcon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+          <span className="ml-2 hidden sm:inline">Send</span>
         </Button>
       </div>
     </div>

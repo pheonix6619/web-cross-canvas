@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { PersonaSelector } from './PersonaSelector';
 import { ChatInput } from './ChatInput';
+import { ChatHeader } from './ChatHeader';
 import { PersonaType, ChatMessage as ChatMessageType, FileAttachment } from '@/types/chat';
 import { getPersonaConfig } from '@/config/personas';
 import { generateGeminiResponse } from '@/services/geminiApi';
 import { useToast } from '@/hooks/use-toast';
+import { Bot } from 'lucide-react';
 
 export const ChatInterface = () => {
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
@@ -83,28 +85,42 @@ export const ChatInterface = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-4xl mx-auto bg-background border border-border rounded-lg overflow-hidden">
+    <div className="flex flex-col h-screen max-w-6xl mx-auto bg-gradient-bg backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden shadow-strong animate-fade-in">
+      <ChatHeader />
+      
       <PersonaSelector 
         selectedPersona={selectedPersona}
         onPersonaChange={setSelectedPersona}
       />
       
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto bg-gradient-secondary/30 backdrop-blur-sm">
         {messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-center p-8">
-            <div>
-              <h2 className="text-2xl font-semibold text-foreground mb-2">
-                Welcome to AI Chat
-              </h2>
-              <p className="text-muted-foreground">
-                Select a persona and start chatting!
-              </p>
+          <div className="flex items-center justify-center h-full text-center p-8 animate-scale-in">
+            <div className="space-y-6">
+              <div className="relative">
+                <Bot className="w-16 h-16 mx-auto text-primary animate-bounce-gentle" />
+                <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse-glow"></div>
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-3">
+                  Welcome to AI Chat
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
+                  Choose your preferred AI persona and start an engaging conversation!
+                </p>
+              </div>
             </div>
           </div>
         ) : (
-          <div className="space-y-1">
-            {messages.map((message) => (
-              <ChatMessage key={message.id} message={message} />
+          <div className="space-y-2 p-2">
+            {messages.map((message, index) => (
+              <div 
+                key={message.id} 
+                className={`animate-fade-in`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <ChatMessage message={message} />
+              </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
