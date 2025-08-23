@@ -17,7 +17,16 @@ export const PersonaSelector = ({ selectedPersona, onPersonaChange }: PersonaSel
       
       <Select value={selectedPersona} onValueChange={onPersonaChange}>
         <SelectTrigger className="w-48 bg-background/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 transition-all duration-300 shadow-soft hover:shadow-medium">
-          <SelectValue />
+          <div className="flex items-center gap-2">
+            <img 
+              src={personaConfigs.find(p => p.id === selectedPersona)?.avatar} 
+              alt={personaConfigs.find(p => p.id === selectedPersona)?.name}
+              className="w-5 h-5 rounded-full object-cover"
+            />
+            <span className="font-medium">
+              {personaConfigs.find(p => p.id === selectedPersona)?.name}
+            </span>
+          </div>
         </SelectTrigger>
         <SelectContent className="bg-background/95 backdrop-blur-md border border-border/50 shadow-strong">
           {personaConfigs.map((persona: PersonaConfig) => (
