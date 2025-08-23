@@ -10,7 +10,15 @@ import { useToast } from '@/hooks/use-toast';
 import { Bot } from 'lucide-react';
 
 export const ChatInterface = () => {
-  const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [messages, setMessages] = useState<ChatMessageType[]>([
+    {
+      id: 'welcome',
+      content: "Hello! I'm your AI assistant. I can take on different personas to help you better. Choose a persona above and start chatting with me!",
+      type: 'ai',
+      timestamp: new Date(),
+      persona: 'teacher'
+    }
+  ]);
   const [selectedPersona, setSelectedPersona] = useState<PersonaType>('teacher');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
