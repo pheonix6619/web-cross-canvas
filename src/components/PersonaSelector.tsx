@@ -24,18 +24,23 @@ export const PersonaSelector = ({ selectedPersona, onPersonaChange }: PersonaSel
             <SelectItem 
               key={persona.id} 
               value={persona.id}
-              className="hover:bg-primary/10 transition-all duration-200 cursor-pointer"
+              className="hover:bg-primary/10 transition-all duration-200 cursor-pointer p-4"
             >
-              <div className="flex items-center gap-3 py-1">
-                <div className="relative">
+              <div className="flex items-start gap-3 py-1">
+                <div className="relative flex-shrink-0 mt-1">
                   <img 
                     src={persona.avatar} 
                     alt={persona.name}
-                    className="w-6 h-6 rounded-full object-cover border border-border/50 shadow-soft"
+                    className="w-8 h-8 rounded-full object-cover border border-border/50 shadow-soft"
                   />
                   <div className="absolute inset-0 bg-primary/20 rounded-full blur-sm opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <span className="font-medium">{persona.name}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-foreground mb-1">{persona.name}</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                    {persona.instruction}
+                  </p>
+                </div>
               </div>
             </SelectItem>
           ))}
