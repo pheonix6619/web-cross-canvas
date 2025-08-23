@@ -12,7 +12,7 @@ export interface FileAttachment {
   data: string | null;
 }
 
-export type PersonaType = 'teacher' | 'friend' | 'mental_health' | 'suggestions';
+export type PersonaType = 'teacher' | 'friend' | 'mental_health' | 'suggestions' | 'lover' | 'career' | 'fitness' | 'travel' | 'chef' | 'finance';
 
 export interface PersonaConfig {
   id: PersonaType;
